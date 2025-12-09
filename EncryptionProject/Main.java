@@ -9,36 +9,36 @@ class Main {
    
     // Array1: Specific characters
     char[] letter = new char[7]; //sub
-    sub[0] = 'd';
-    sub[1] = 'j';
-    sub[2] = 'n';
-    sub[3] = 'm';
-    sub[4] = 'b';
-    sub[5] = 'o';
-    sub[6] = 's';
+    letter[0] = 'd';
+    letter[1] = 'j';
+    letter[2] = 'n';
+    letter[3] = 'm';
+    letter[4] = 'b';
+    letter[5] = 'o';
+    letter[6] = 's';
 
     // Array2: Unicode characters
     char[] Mnote = new char[7]; //sub replace with sub2
-    sub2[0] = '\u2669';  // QUARTER NOTE
-    sub2[1] = '\u266A';  // EIGHTH NOTE
-    sub2[2] = '\u266B';  // BEAMED EIGHTH NOTES
-    sub2[3] = '\u266C';  // BEAMED SIXTEENTH NOTES
-    sub2[4] = '\u283D';  // MUSIC FLAT SIGN
-    sub2[5] = '\u283E';  // MUSIC NATURAL SIGN
-    sub2[6] = '\u283F';  // MUSIC SHARP SIGN
+    Mnote[0] = '\u2669';  // QUARTER NOTE
+    Mnote[1] = '\u266A';  // EIGHTH NOTE
+    Mnote[2] = '\u266B';  // BEAMED EIGHTH NOTES
+    Mnote[3] = '\u266C';  // BEAMED SIXTEENTH NOTES
+    Mnote[4] = '\u283D';  // MUSIC FLAT SIGN
+    Mnote[5] = '\u283E';  // MUSIC NATURAL SIGN
+    Mnote[6] = '\u283F';  // MUSIC SHARP SIGN
 
     
     // Encoding the plaintext:
     String file = Input.readFile("Original.txt");
     // Encode level 1 (string manipulation - reverse)
-    String encodedMsg1 = subEncryption(file,letter,Mnote);
+    String encodedMsg1 = reverse(file);
     Input.writeFile("Encode1.txt", encodedMsg1);
     // // Encode level 2 (substitution)
-    String encodedMsg2 = encode(encodedMsg1);
+    String encodedMsg2 = subEncryption(encodedMsg1,letter,Mnote);
     Input.writeFile("Encode2.txt", encodedMsg2);
     // // Encode level 3 (Cipher elevated - round robbin shift)
-    String encodedMsg3 = reverse(encodedMsg2);
-    Input.writeFile("Encode3.txt", encodedMsg3);
+    // String encodedMsg3 =  (encodedMsg2);
+    // Input.writeFile("Encode3.txt", encodedMsg3);
 
     
     // Decoding the ciphertext: 
@@ -47,34 +47,46 @@ class Main {
     String decodedMsg1 = reverse(file2);
     Input.writeFile("Decode1.txt", decodedMsg1);
     // Decode level 2 (substitution)
-    String decodedMsg2 = decode(decodedMsg1);
+    String decodedMsg2 = subEncryption(decodedMsg1, Mnote, letter);
     Input.writeFile("Decode2.txt", decodedMsg2);
     // Decode level 3 (string manipulation - reverseback)
-    String decodedMsg3 = subEncryption(decodedMsg2, Mnote, letter);
-    Input.writeFile("Decode3.txt", decodedMsg3);
+    // String decodedMsg3 = roundRobbin2(decodedMsg2);
+    // Input.writeFile("Decode3.txt", decodedMsg3);
     
     
   }
+
+  // // reverse a string (encode 1)
+  // String reverse(String txt){
+  //   String build ="";
+  //   for(int x=0; x<= txt.length()-1; x++){
+  //     build = txt.charAt(x) + build;
+  //   }
+  //   return build;
+  // }
 
   // reverse a string (encode 1)
   String reverse(String txt){
     String build ="";
     for(int x=0; x<= txt.length()-1; x++){
-      build = txt.charAt(x) + build;
+      if(txt.equals(' '){
+        build += txt.charAt(i) + build;
+      }else{
+        build += ' ';
+      }
     }
     return build;
   }
-
   // Substitution (encode2)
   String subEncryption(String s, char[] letter, char[] Mchar){
     String build = "";
     char ch ='\0';
     int index=0;
     for(int x=0; x<=s.length()-1; x++){
-      ch = s.charAt(x);
-      index = indexOf(ch,sub);
+      ch = s.charAt(x); //identify where the character position
+      index = indexOf(ch,letter);
       if(index != -1){
-        build += sub2[index];
+        build += Mchar[index];
       }
       else{
         build += ch;
@@ -83,35 +95,35 @@ class Main {
     return build;
   }
 
-  // Cipher +1 encoding with no wrapping
-  String encode(String txt){
-    String build = "";
-    int ascii = 0;
-    char ch = '\0';
+  // // Cipher +1 encoding with no wrapping
+  // String encode(String txt){
+  //   String build = "";
+  //   int ascii = 0;
+  //   char ch = '\0';
     
-    for(int x=0; x<=txt.length()-1; x++){
-      ch = txt.charAt(x);
-      ascii = (int)ch;
-      ascii += 1;
+  //   for(int x=0; x<=txt.length()-1; x++){
+  //     ch = txt.charAt(x);
+  //     ascii = (int)ch;
+  //     ascii += 1;
       
-      build += (char)ascii;
-    }     
-    return build;
-  }
+  //     build += (char)ascii;
+  //   }     
+  //   return build;
+  // }
 
-  // Cipher -1 encoding with no wrapping
-  String decode(String txt){
-    String build="";
-    int ascii;
-    char ch='\0';
-    for(int x=0; x<=txt.length()-1; x++){
-      ch=txt.charAt(x);
-      ascii = (int)ch;
-      ascii -= 1;
-        build += (char)ascii;
-    }
-    return build;
-  }
+  // // Cipher -1 encoding with no wrapping
+  // String decode(String txt){
+  //   String build="";
+  //   int ascii;
+  //   char ch='\0';
+  //   for(int x=0; x<=txt.length()-1; x++){
+  //     ch=txt.charAt(x);
+  //     ascii = (int)ch;
+  //     ascii -= 1;
+  //       build += (char)ascii;
+  //   }
+  //   return build;
+  // }
 
   // identifying index of char within array
   int indexOf(char ch, char[] arry){
