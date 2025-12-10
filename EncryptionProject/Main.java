@@ -36,9 +36,9 @@ class Main {
     // // Encode level 2 (substitution)
     String encodedMsg2 = subEncryption(encodedMsg1,letter,Mnote);
     Input.writeFile("Encode2.txt", encodedMsg2);
-    // // Encode level 3 (Cipher elevated - round robbin shift)
-    // String encodedMsg3 =  (encodedMsg2);
-    // Input.writeFile("Encode3.txt", encodedMsg3);
+    // Encode level 3 (Cipher elevated - round robbin shift)
+    String encodedMsg3 = roundRobbin1(encodedMsg2);
+    Input.writeFile("Encode3.txt", encodedMsg3);
 
     
     // Decoding the ciphertext: 
@@ -50,40 +50,28 @@ class Main {
     String decodedMsg2 = subEncryption(decodedMsg1, Mnote, letter);
     Input.writeFile("Decode2.txt", decodedMsg2);
     // Decode level 3 (string manipulation - reverseback)
-    // String decodedMsg3 = roundRobbin2(decodedMsg2);
-    // Input.writeFile("Decode3.txt", decodedMsg3);
+    String decodedMsg3 = roundRobbin2(decodedMsg2);
+    Input.writeFile("Decode3.txt", decodedMsg3);
     
     
   }
 
   // // reverse a string (encode 1)
-  // String reverse(String txt){
-  //   String build ="";
-  //   for(int x=0; x<= txt.length()-1; x++){
-  //     build = txt.charAt(x) + build;
-  //   }
-  //   return build;
-  // }
-
-  // reverse a string (encode 1)
-  String reverse(String txt){
+  String reverse(String msg){
     String build ="";
-    for(int x=0; x<= txt.length()-1; x++){
-      if(txt.equals(' '){
-        build += txt.charAt(i) + build;
-      }else{
-        build += ' ';
-      }
+    for(int x=0; x<= msg.length()-1; x++){
+      build = msg.charAt(x) + build;
     }
     return build;
   }
+
   // Substitution (encode2)
-  String subEncryption(String s, char[] letter, char[] Mchar){
+  String subEncryption(String msg1, char[] letter, char[] Mchar){
     String build = "";
     char ch ='\0';
     int index=0;
-    for(int x=0; x<=s.length()-1; x++){
-      ch = s.charAt(x); //identify where the character position
+    for(int x=0; x<=msg1.length()-1; x++){
+      ch = msg1.charAt(x); //identify where the character position
       index = indexOf(ch,letter);
       if(index != -1){
         build += Mchar[index];
@@ -95,35 +83,36 @@ class Main {
     return build;
   }
 
-  // // Cipher +1 encoding with no wrapping
-  // String encode(String txt){
-  //   String build = "";
-  //   int ascii = 0;
-  //   char ch = '\0';
-    
-  //   for(int x=0; x<=txt.length()-1; x++){
-  //     ch = txt.charAt(x);
-  //     ascii = (int)ch;
-  //     ascii += 1;
-      
-  //     build += (char)ascii;
-  //   }     
-  //   return build;
-  // }
 
-  // // Cipher -1 encoding with no wrapping
-  // String decode(String txt){
-  //   String build="";
-  //   int ascii;
-  //   char ch='\0';
-  //   for(int x=0; x<=txt.length()-1; x++){
-  //     ch=txt.charAt(x);
-  //     ascii = (int)ch;
-  //     ascii -= 1;
-  //       build += (char)ascii;
-  //   }
-  //   return build;
-  // }
+  // Round Robbin +1 encoding 
+  String roundRobbin1(String txt){
+    String build = "";
+    int ascii = 0;
+    char ch = '\0';
+    
+    for(int x=0; x<=txt.length()-1; x++){
+      ch = txt.charAt(x);
+      ascii = (int)ch;
+      ascii += 1;
+      
+      build += (char)ascii;
+    }     
+    return build;
+  }
+
+  // Round Robbin -1 encoding 
+  String roundRobbin2(String txt){
+    String build="";
+    int ascii;
+    char ch='\0';
+    for(int x=0; x<=txt.length()-1; x++){
+      ch=txt.charAt(x);
+      ascii = (int)ch;
+      ascii -= 1;
+        build += (char)ascii;
+    }
+    return build;
+  }
 
   // identifying index of char within array
   int indexOf(char ch, char[] arry){
