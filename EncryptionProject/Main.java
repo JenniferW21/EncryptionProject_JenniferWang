@@ -28,30 +28,31 @@ class Main {
 
 
     
-    // Encoding the plaintext:
+    // Encoding the original text:
     String file = Input.readFile("Original.txt");
-    // Encode level 1 (string manipulation - reverse)
+    // Encode level 1 (String Manipulation - Reverse)
     String encodedMsg1 = reverse(file);
     Input.writeFile("Encode1.txt", encodedMsg1);
     // // Encode level 2 (substitution)
     String encodedMsg2 = subEncryption(encodedMsg1,letter,cHess);
     Input.writeFile("Encode2.txt", encodedMsg2);
     // Encode level 3 (Cipher elevated - round robbin shift)
-    int [] roundRobin = {1,2,3,4};
-    String encodedMsg3 = roundRobin1(encodedMsg2,roundRobin);
+    int [] roundRobin1 = {1,2,3,4};
+    String encodedMsg3 = roundRobin1(encodedMsg2,roundRobin1);
     Input.writeFile("Encode3.txt", encodedMsg3);
 
     
-    // Decoding the ciphertext: 
+    // Decoding the encoded text: 
     String file2 = Input.readFile("Encode3.txt");
     // Decode level 1  (Cipher elevated - round robbin shift)
     String decodedMsg1 = reverse(file2);
     Input.writeFile("Decode1.txt", decodedMsg1);
-    // Decode level 2 (substitution)
+    // Decode level 2 (Substitution)
     String decodedMsg2 = subEncryption(decodedMsg1, cHess, letter);
     Input.writeFile("Decode2.txt", decodedMsg2);
-    // Decode level 3 (string manipulation - reverseback)
-    String decodedMsg3 = roundRobin2(decodedMsg2);
+    // Decode level 3 (String Manipulation - ReverseBack)
+    int [] roundRobin2 = {4,3,2,1};
+    String decodedMsg3 = roundRobin2(decodedMsg2,roundRobin2);
     Input.writeFile("Decode3.txt", decodedMsg3);
     
     
@@ -60,7 +61,7 @@ class Main {
   // // reverse a string (encode 1)
   String reverse(String msg){
     String build ="";
-    for(int x=0; x<= msg.length()-1; x++){
+    for(int x=0; x< msg.length; x++){
       build = msg.charAt(x) + build;
     }
     return build;
@@ -71,7 +72,7 @@ class Main {
     String build = "";
     char ch ='\0';
     int index=0;
-    for(int x=0; x<=msg1.length()-1; x++){
+    for(int x=0; x<msg1.length(); x++){
       ch = msg1.charAt(x); //identify where the character position
       index = indexOf(ch,letter);
       if(index != -1){
