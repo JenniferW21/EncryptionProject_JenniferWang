@@ -8,24 +8,24 @@ class Main {
   void init(){
    
     // Array1: Specific characters
-    char[] letter = new char[7]; //sub
-    letter[0] = 'd';
-    letter[1] = 'j';
-    letter[2] = 'n';
-    letter[3] = 'm';
-    letter[4] = 'b';
-    letter[5] = 'o';
-    letter[6] = 's';
+    char[] letter = new char[6]; //sub
+    letter[0] = 'a';
+    letter[1] = 'e';
+    letter[2] = 'i';
+    letter[3] = 'n';
+    letter[4] = 'o';
+    letter[5] = 't';
+  
 
     // Array2: Unicode characters
-    char[] Mnote = new char[7]; //sub replace with sub2
-    Mnote[0] = '\u2669';  // QUARTER NOTE
-    Mnote[1] = '\u266A';  // EIGHTH NOTE
-    Mnote[2] = '\u266B';  // BEAMED EIGHTH NOTES
-    Mnote[3] = '\u266C';  // BEAMED SIXTEENTH NOTES
-    Mnote[4] = '\u283D';  // MUSIC FLAT SIGN
-    Mnote[5] = '\u283E';  // MUSIC NATURAL SIGN
-    Mnote[6] = '\u283F';  // MUSIC SHARP SIGN
+    char[] cHess = new char[6]; //sub replace with sub2
+    cHess[0] = '\u2654';  // QUARTER NOTE
+    cHess[1] = '\u2655';  // EIGHTH NOTE
+    cHess[2] = '\u2656';  // BEAMED EIGHTH NOTES
+    cHess[3] = '\u2657';  // BEAMED SIXTEENTH NOTES
+    cHess[4] = '\u2658';  // MUSIC FLAT SIGN
+    cHess[5] = '\u2659';  // MUSIC NATURAL SIGN
+
 
     
     // Encoding the plaintext:
@@ -34,10 +34,11 @@ class Main {
     String encodedMsg1 = reverse(file);
     Input.writeFile("Encode1.txt", encodedMsg1);
     // // Encode level 2 (substitution)
-    String encodedMsg2 = subEncryption(encodedMsg1,letter,Mnote);
+    String encodedMsg2 = subEncryption(encodedMsg1,letter,cHess);
     Input.writeFile("Encode2.txt", encodedMsg2);
     // Encode level 3 (Cipher elevated - round robbin shift)
-    String encodedMsg3 = roundRobbin1(encodedMsg2);
+    int [] roundRobin = {1,2,3,4};
+    String encodedMsg3 = roundRobin1(encodedMsg2,roundRobin);
     Input.writeFile("Encode3.txt", encodedMsg3);
 
     
@@ -47,10 +48,10 @@ class Main {
     String decodedMsg1 = reverse(file2);
     Input.writeFile("Decode1.txt", decodedMsg1);
     // Decode level 2 (substitution)
-    String decodedMsg2 = subEncryption(decodedMsg1, Mnote, letter);
+    String decodedMsg2 = subEncryption(decodedMsg1, cHess, letter);
     Input.writeFile("Decode2.txt", decodedMsg2);
     // Decode level 3 (string manipulation - reverseback)
-    String decodedMsg3 = roundRobbin2(decodedMsg2);
+    String decodedMsg3 = roundRobin2(decodedMsg2);
     Input.writeFile("Decode3.txt", decodedMsg3);
     
     
@@ -85,34 +86,28 @@ class Main {
 
 
   // Round Robbin +1 encoding 
-  String roundRobbin1(String txt){
+  String roundRobin1(String msg2, int[] rRobinshift){ //(the text that is being encoded, the array of shifts)
     String build = "";
+    int rRobin = 0;
     int ascii = 0;
     char ch = '\0';
     
-    for(int x=0; x<=txt.length()-1; x++){
-      ch = txt.charAt(x);
-      ascii = (int)ch;
-      ascii += 1;
-      
-      build += (char)ascii;
-    }     
-    return build;
+    for(int x=0; x<msg2.length(); x++){
+      ch = msg2.charAt(x); //position of each character
+      ascii = (int)ch; //takes each char and cast into integer
+      if(ch == ' '){
+        build +=' ';
+      }
+      ascii += rRobinshift[rRobin]; // array[0] position 0 would be shift of 1
+      build += (char)ascii; //convert to character 
+      rRobin++; //the array position goes up
+      if(rRobin == 4){ //only 4 shifts in total{1,2,3,4} after for it goes back to position 0 which is 1
+        rRobin = 0;   
+    }  
   }
+  return build;
+}
 
-  // Round Robbin -1 encoding 
-  String roundRobbin2(String txt){
-    String build="";
-    int ascii;
-    char ch='\0';
-    for(int x=0; x<=txt.length()-1; x++){
-      ch=txt.charAt(x);
-      ascii = (int)ch;
-      ascii -= 1;
-        build += (char)ascii;
-    }
-    return build;
-  }
 
   // identifying index of char within array
   int indexOf(char ch, char[] arry){
