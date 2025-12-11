@@ -19,12 +19,12 @@ class Main {
 
     // Array2: Unicode characters
     char[] cHess = new char[6]; //sub replace with sub2
-    cHess[0] = '\u2654';  // QUARTER NOTE
-    cHess[1] = '\u2655';  // EIGHTH NOTE
-    cHess[2] = '\u2656';  // BEAMED EIGHTH NOTES
-    cHess[3] = '\u2657';  // BEAMED SIXTEENTH NOTES
-    cHess[4] = '\u2658';  // MUSIC FLAT SIGN
-    cHess[5] = '\u2659';  // MUSIC NATURAL SIGN
+    cHess[0] = '\u2654';  // WHITE CHESS KING
+    cHess[1] = '\u2655';  // WHITE CHESS QUEEN
+    cHess[2] = '\u2656';  // WHITE CHESS ROOK
+    cHess[3] = '\u2657';  // WHITE CHESS BISHOP
+    cHess[4] = '\u2658';  // WHITE CHESS KNIGHT
+    cHess[5] = '\u2659';  // WHITE CHESS PAWN
 
 
     
