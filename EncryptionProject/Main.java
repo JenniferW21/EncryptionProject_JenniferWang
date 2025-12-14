@@ -30,9 +30,9 @@ class Main {
 
     
     // Encoding the original text:
-    String file = Input.readFile("Original.txt");
+    String file1 = Input.readFile("Original.txt");
     // Encode level 1 (String Manipulation - Reverse)
-    String encodedMsg1 = reverse(file);
+    String encodedMsg1 = reverse(file1);
     Input.writeFile("Encode1.txt", encodedMsg1);
     // // Encode level 2 (substitution)
     String encodedMsg2 = subEncryption(encodedMsg1,letter,cHess);
