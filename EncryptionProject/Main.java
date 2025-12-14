@@ -9,22 +9,23 @@ class Main {
    
     // Array1: Specific characters
     char[] letter = new char[6]; //sub
-    letter[0] = 'a';
-    letter[1] = 'e';
-    letter[2] = 'i';
-    letter[3] = 'n';
-    letter[4] = 'o';
-    letter[5] = 't';
-  
+      letter[0] = 'b';
+      letter[1] = 'r';
+      letter[2] = 'a';
+      letter[3] = 'i';
+      letter[4] = 'l';
+      letter[5] = 'e';
+ 
+
 
     // Array2: Unicode characters
-    char[] cHess = new char[6]; //sub replace with sub2
-    cHess[0] = '\u2654';  // WHITE CHESS KING
-    cHess[1] = '\u2655';  // WHITE CHESS QUEEN
-    cHess[2] = '\u2656';  // WHITE CHESS ROOK
-    cHess[3] = '\u2657';  // WHITE CHESS BISHOP
-    cHess[4] = '\u2658';  // WHITE CHESS KNIGHT
-    cHess[5] = '\u2659';  // WHITE CHESS PAWN
+    char[] braillePattern = new char[6]; //sub replace with sub2
+      braillePattern[0] = '\u2803';  // BRAILLE PATTERN DOTS-12(b)
+      braillePattern[1] = '\u2817';  // BRAILLE PATTERN DOTS-1235(r)
+      braillePattern[2] = '\u2801';  // BRAILLE PATTERN DOTS-1(a)
+      braillePattern[3] = '\u280A';  // BRAILLE PATTERN DOTS-24(i)
+      braillePattern[4] = '\u2807';  // BRAILLE PATTERN DOTS-123(l)
+      braillePattern[5] = '\u2811';  // BRAILLE PATTERN DOTS-15(e)
 
 
     
@@ -42,33 +43,34 @@ class Main {
     Input.writeFile("Encode3.txt", encodedMsg3);
 
     
-    // Decoding the encoded text: 
-    String file2 = Input.readFile("Encode3.txt");
-    // Decode level 1  (Cipher elevated - round robbin shift)
-    String decodedMsg1 = reverse(file2);
-    Input.writeFile("Decode1.txt", decodedMsg1);
+    // // Decoding the encoded text: 
+    // String file2 = Input.readFile("Encode3.txt");
+    // // Decode level 1  (Cipher elevated - round robbin shift)
+    // int [] roundRobin2 = {4,3,2,1};
+    // String decodedMsg1 = roundRobin2(file2,roundRobin2);
+    // Input.writeFile("Decode1.txt", decodedMsg1);
     // Decode level 2 (Substitution)
-    String decodedMsg2 = subEncryption(decodedMsg1, cHess, letter);
-    Input.writeFile("Decode2.txt", decodedMsg2);
-    // Decode level 3 (String Manipulation - ReverseBack)
-    int [] roundRobin2 = {4,3,2,1};
-    String decodedMsg3 = roundRobin2(decodedMsg2,roundRobin2);
-    Input.writeFile("Decode3.txt", decodedMsg3);
+    // String decodedMsg2 = subEncryption(decodedMsg1, cHess, letter);
+    // Input.writeFile("Decode2.txt", decodedMsg2);
+    // // Decode level 3 (String Manipulation - ReverseBack)
+    // String decodedMsg3 = reverse(decodedMsg2);
+    // Input.writeFile("Decode1.txt", decodedMsg3);
+
     
     
   }
 
-  // // reverse a string (encode 1)
+  // reverse a string (encode 1)
   String reverse(String msg){
     String build ="";
-    for(int x=0; x< msg.length; x++){
+    for(int x=0; x< msg.length(); x++){
       build = msg.charAt(x) + build;
     }
     return build;
   }
 
   // Substitution (encode2)
-  String subEncryption(String msg1, char[] letter, char[] Mchar){
+  String subEncryption(String msg1, char[] letter, char[] cPiece){
     String build = "";
     char ch ='\0';
     int index=0;
@@ -76,7 +78,7 @@ class Main {
       ch = msg1.charAt(x); //identify where the character position
       index = indexOf(ch,letter);
       if(index != -1){
-        build += Mchar[index];
+        build += cPiece[index];
       }
       else{
         build += ch;
@@ -86,23 +88,20 @@ class Main {
   }
 
 
-  // Round Robbin +1 encoding 
+  // Round Robbin +1 encoding (encode 3)
   String roundRobin1(String msg2, int[] rRobinshift){ //(the text that is being encoded, the array of shifts)
     String build = "";
     int rRobin = 0;
     int ascii = 0;
     char ch = '\0';
     
-    for(int x=0; x<msg2.length(); x++){
+    for(int x=0; x < msg2.length(); x++){
       ch = msg2.charAt(x); //position of each character
       ascii = (int)ch; //takes each char and cast into integer
-      if(ch == ' '){
-        build +=' ';
-      }
       ascii += rRobinshift[rRobin]; // array[0] position 0 would be shift of 1
       build += (char)ascii; //convert to character 
       rRobin++; //the array position goes up
-      if(rRobin == 4){ //only 4 shifts in total{1,2,3,4} after for it goes back to position 0 which is 1
+      if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0 which is return shift +1
         rRobin = 0;   
     }  
   }
