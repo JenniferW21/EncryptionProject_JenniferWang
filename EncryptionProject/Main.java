@@ -104,10 +104,10 @@ class Main {
       rRobin++; //the array position goes up
       if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0 which is return shift +1
         rRobin = 0;   
-    }  
+      }  
+    }
+    return build;
   }
-  return build;
-}
 
 
   // identifying index of char within array
