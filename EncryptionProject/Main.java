@@ -69,6 +69,13 @@ class Main {
     }
     return build;
   }
+  // String reverse(String s){
+  //   String build = ""; // building a string
+  //   for(int x=0; x<=s.length()-2; x+=2){ // for loop
+  //       build += s.substring(x+1,x+2) + s.substring(x,x+1); // Switching letter
+  //   }
+  //   return build;
+  // }
 
   // Substitution (encode2)
   String subEncryption(String msg1, char[] letter, char[] bRaille){
@@ -90,20 +97,20 @@ class Main {
 
 
   // Round Robbin +1 encoding (encode 3)
-  String roundRobin1(String msg2, int[] rRobinshift){ //(the text that is being encoded, the array of shifts)
+  String roundRobin1(String msg2, int[] rRobinshift){ //(encodedmsg1, the array of shifts)
     String build = "";
     int rRobin = 0;
     int ascii = 0;
     char ch = '\0';
     
-    for(int x=0; x < msg2.length(); x++){
+    for(int x=0; x < msg2.length(); x++){//forloop to go through each letter of the string
       ch = msg2.charAt(x); //position of each character
       ascii = (int)ch; //takes each char and cast into integer
       ascii += rRobinshift[rRobin]; // array[0] position 0 would be shift of 1
       build += (char)ascii; //convert to character 
       rRobin++; //the array position goes up
-      if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0 which is return shift +1
-        rRobin = 0;   
+      if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0 
+        rRobin = 0;             //position(0,1,2,3)
       }  
     }
     return build;
