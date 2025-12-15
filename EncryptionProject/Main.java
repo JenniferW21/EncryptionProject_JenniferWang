@@ -8,25 +8,26 @@ class Main {
   void init(){
    
     // Array1: Specific characters
-    char[] letter = new char[6]; //sub
+    char[] letter = new char[7]; //sub
       letter[0] = 'b';
       letter[1] = 'r';
       letter[2] = 'a';
       letter[3] = 'i';
       letter[4] = 'l';
       letter[5] = 'e';
+      letter[6] = '.';
  
 
 
     // Array2: Unicode characters
-    char[] braillePattern = new char[6]; //sub replace with sub2
+    char[] braillePattern = new char[7]; //sub replace with sub2
       braillePattern[0] = '\u2803';  // BRAILLE PATTERN DOTS-12(b)
       braillePattern[1] = '\u2817';  // BRAILLE PATTERN DOTS-1235(r)
       braillePattern[2] = '\u2801';  // BRAILLE PATTERN DOTS-1(a)
       braillePattern[3] = '\u280A';  // BRAILLE PATTERN DOTS-24(i)
       braillePattern[4] = '\u2807';  // BRAILLE PATTERN DOTS-123(l)
       braillePattern[5] = '\u2811';  // BRAILLE PATTERN DOTS-15(e)
-
+      braillePattern[6] = '\u2832';  // BRAILLE PATTERN DOTS-256(.)
 
     
     // Encoding the original text:
@@ -35,7 +36,7 @@ class Main {
     String encodedMsg1 = reverse(file1);
     Input.writeFile("Encode1.txt", encodedMsg1);
     // // Encode level 2 (substitution)
-    String encodedMsg2 = subEncryption(encodedMsg1,letter,cHess);
+    String encodedMsg2 = subEncryption(encodedMsg1,letter,braillePattern);
     Input.writeFile("Encode2.txt", encodedMsg2);
     // Encode level 3 (Cipher elevated - round robbin shift)
     int [] roundRobin1 = {1,2,3,4};
@@ -50,7 +51,7 @@ class Main {
     // String decodedMsg1 = roundRobin2(file2,roundRobin2);
     // Input.writeFile("Decode1.txt", decodedMsg1);
     // Decode level 2 (Substitution)
-    // String decodedMsg2 = subEncryption(decodedMsg1, cHess, letter);
+    // String decodedMsg2 = subEncryption(decodedMsg1, braillePattern, letter);
     // Input.writeFile("Decode2.txt", decodedMsg2);
     // // Decode level 3 (String Manipulation - ReverseBack)
     // String decodedMsg3 = reverse(decodedMsg2);
@@ -70,7 +71,7 @@ class Main {
   }
 
   // Substitution (encode2)
-  String subEncryption(String msg1, char[] letter, char[] cPiece){
+  String subEncryption(String msg1, char[] letter, char[] bRaille){
     String build = "";
     char ch ='\0';
     int index=0;
@@ -78,7 +79,7 @@ class Main {
       ch = msg1.charAt(x); //identify where the character position
       index = indexOf(ch,letter);
       if(index != -1){
-        build += cPiece[index];
+        build += bRaille[index];
       }
       else{
         build += ch;
