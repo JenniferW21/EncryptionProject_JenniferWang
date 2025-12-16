@@ -108,7 +108,7 @@ class Main {
     for(int x=0; x < msg2.length(); x++){//forloop to go through each letter of the string
       ch = msg2.charAt(x); //position of each character
       ascii = (int)ch; //takes each char and cast into integer
-      ascii += rRobinshift[rRobin]; // array[0] position 0 would be shift of 1
+      ascii += rRobinshift[rRobin]; //ascii = rRobinshift[0] = +1 because its '+='
       build += (char)ascii; //convert to character
       rRobin++; //the array position goes up
       if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0
@@ -128,14 +128,15 @@ class Main {
     for(int x=0; x < msg3.length(); x++){//forloop to go through each letter of the string
       ch = msg3.charAt(x); //position of each character
       ascii = (int)ch; //takes each char and cast into integer
-      ascii -= rRobinshift[rRobin]; // array[0] position 0 would be shift of 1
+      ascii -= rRobinshift[rRobin]; //ascii = rRobinshift[0] = -1 because its '-='
       build += (char)ascii; //convert to character
       rRobin++; //the array position goes up
       if(rRobin == 4){ //4 shifts in total{1,2,3,4} after goes back to position 0
         rRobin = 0;             //position(0,1,2,3)
       }  
     }
-    return build;
+    return build;//everything is shifting back from the first round robin shift 
+                 //eg. Before it was a shift of +1, now it's reversing it to -1
   } 
 
 
