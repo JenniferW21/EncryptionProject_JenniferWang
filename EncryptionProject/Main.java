@@ -89,8 +89,6 @@ class Main {
   }
 
 
-
-
   // Round Robbin encoding (encode 3)
   String roundRobin1(String msg2, int[] rRobinshift){ //(encodedmsg1, the array of shifts)
     String build = "";
