@@ -17,10 +17,6 @@ class Main {
       letter[4] = 'l';
       letter[5] = 'e';
       letter[6] = '.';
- 
-
-
-
 
     // Array2: Unicode characters
     char[] braillePattern = new char[7]; //sub replace with sub2
@@ -61,17 +57,14 @@ class Main {
     // Decode level 3 (String Manipulation - ReverseBack)
     String decodedMsg3 = reverse(decodedMsg2);
     Input.writeFile("Decode3.txt", decodedMsg3);
-
-
-   
    
   }
 
 
   // reverse a string (encode 1)
-  String reverse(String msg){
+  String reverse(String msg){ 
     String build ="";
-    for(int x=0; x< msg.length(); x++){
+    for(int x=0; x<msg.length(); x++){
       build = msg.charAt(x) + build;
     }
     return build;
@@ -84,12 +77,12 @@ class Main {
     int index=0;
     for(int x=0; x<msg1.length(); x++){
       ch = msg1.charAt(x); //identify where the character position
-      index = indexOf(ch,letter);
-      if(index != -1){
-        build += bRaille[index];
+      index = indexOf(ch,letter); //check if there is a sub for the character
+      if(index != -1){ //if index index never =-1 then build the sub
+        build += bRaille[index]; //builds the sub
       }
-      else{
-        build += ch;
+      else{ //if there is no sub for that character
+        build += ch; //builds the orginal character
       }
     }
     return build;
