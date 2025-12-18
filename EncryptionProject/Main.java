@@ -97,7 +97,7 @@ class Main {
     int ascii = 0;
     char ch = '\0';
    
-    for(int x=0; x < msg2.length(); x++){//forloop to go through each letter of the string
+    for(int x=0; x < msg2.length(); x++){ //forloop to go through each letter of the string
       ch = msg2.charAt(x); //position of each character
       ascii = (int)ch; //takes each char and cast into integer
       ascii += rRobinshift[rRobin]; //ascii = rRobinshift[0] = +1 because its '+='
